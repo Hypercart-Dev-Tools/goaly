@@ -1,0 +1,95 @@
+{
+  "repo_label": "Goaly Repo",
+  "repo_kind": "goaly-workspace",
+  "db_filename": "goaly-ask-self.sqlite",
+  "system_instructions_path": "ask_self/ask_self_system_instructions.json",
+  "env_file_path": "temp/ask-self-rag.env",
+  "ingest_command": "./scripts/ask-self-ingest.sh --mode all --no-prs",
+  "tenancy_env_var": "GOALY_SELF_ASK_TEAM_ID",
+  "embedding": {
+    "provider": "qwen-local",
+    "model": "Qwen/Qwen3-Embedding-0.6B",
+    "dim": 1024
+  },
+  "github": {
+    "owner": "",
+    "repo": "",
+    "default_fetch_limit": 200,
+    "token_env_vars": ["GITHUB_TOKEN"]
+  },
+  "docs": {
+    "extensions": [".md", ".mdx", ".txt"],
+    "include_patterns": [
+      "^[^/]+\\.md$",
+      "^(?:docs|dashboards|email-mirror|granola-mirror|notion-mirror|clients)/.+\\.(?:md|mdx|txt)$",
+      "^\\.claude(?:-memory)?/.+\\.(?:md|mdx|txt)$"
+    ],
+    "exclude_patterns": [
+      "^\\.git/",
+      "^node_modules/",
+      "^temp/",
+      "^scratch/",
+      "^\\.venv/",
+      "(?i)^ASK_SELF\\.md$",
+      "(?i)^ARCHITECTURE-BAK\\.md$",
+      "^ask_self/"
+    ]
+  },
+  "source": {
+    "extensions": [".js", ".jsx", ".ts", ".tsx", ".sh", ".yaml", ".yml", ".json", ".txt"],
+    "include_patterns": [
+      "^[^/]+\\.(?:ts|js|sh|yaml|yml|json)$",
+      "^(?:scripts|tests|tools)/.+\\.(?:ts|tsx|js|jsx|sh|yaml|yml|json|txt)$"
+    ],
+    "exclude_patterns": [
+      "^\\.git/",
+      "^node_modules/",
+      "^temp/",
+      "^scratch/",
+      "^\\.venv/",
+      "^dist/",
+      "^build/",
+      "^coverage/",
+      "^ask_self/",
+      "\\.d\\.ts$",
+      "(?:^|/)vendor/"
+    ]
+  },
+  "classification_rules": [
+    {
+      "pattern": "(?i)(?:^|/)changelog\\.md$",
+      "source": "changelog",
+      "priority": 5,
+      "chunker": "changelog"
+    },
+    {
+      "pattern": "(?i)^(?:AGENTS|ARCHITECTURE|DESIGN|CONTRIBUTING|SECURITY|DASHBOARD|QUICKHELP|README|MODULE-DEV-CHECKLIST|IMPLEMENTATION_SUMMARY|ASK_SELF_INTEGRATION)[^/]*\\.md$",
+      "source": "policy",
+      "priority": 5,
+      "chunker": "text"
+    },
+    {
+      "pattern": "^(?:tools)/.+\\.(?:ts|js)$",
+      "source": "module",
+      "priority": 3,
+      "chunker": "javascript"
+    },
+    {
+      "pattern": "\\.sh$",
+      "source": "script",
+      "priority": 2,
+      "chunker": "line"
+    },
+    {
+      "pattern": "\\.mdx?$",
+      "source": "doc",
+      "priority": 2,
+      "chunker": "text"
+    }
+  ],
+  "default_classification": {
+    "source": "doc",
+    "priority": 1,
+    "chunker": "text"
+  }
+}

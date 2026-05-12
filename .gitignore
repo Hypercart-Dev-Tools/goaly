@@ -137,3 +137,9 @@ dist
 # Vite logs files
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
+
+# ask-self
+temp/rag/
+temp/ask-self-rag.env
+*__embed_cache.sqlite
+*__events.jsonl

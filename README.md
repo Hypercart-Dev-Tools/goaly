@@ -73,6 +73,18 @@ Top 3-5 tasks become the **Pareto 20%**.
 
 Weekday pulse mode: just the scorecard, flags, and today's tasks. 2-3 minutes, zero interaction.
 
+## Code Intelligence
+
+This repository integrates **ask-self**, a repo-grounded RAG tool that answers questions about the codebase with citations.
+
+- **Query:** `./scripts/ask-self-query.sh "your question here"`
+- **Ingest (Refresh Index):** `./scripts/ask-self-ingest.sh`
+
+Each developer must run the ingest command once before querying; the index lives under `temp/rag/` and is gitignored.
+
+No API key is required for retrieval. It uses Qwen local embeddings (`qwen-local`, requiring `pip install sentence-transformers`). Synthesis defaults to Gemini, but can be skipped using `--retrieval-only` or fully localized.
+`ASK_SELF_PATH` can be overridden if ask-self is installed elsewhere.
+
 ## Architecture
 
 ### Everything Is Markdown

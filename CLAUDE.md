@@ -99,6 +99,28 @@ You say stuff. Claude parses it, classifies items, writes them to the appropriat
 
 When any workflow needs your input, use the `AskUserQuestion` tool with structured options (2-4 choices with clear descriptions). Structured choices are easier to process than open-ended questions. Use tables not prose for presenting options.
 
+## Code Intelligence (ask-self)
+
+ask-self is a repo-grounded RAG tool that provides intelligent context and answers about this workspace.
+
+**Command:** `./scripts/ask-self-query.sh "your question here"`
+
+Before grep-spelunking or asking the user to re-explain repo context, query ask-self first.
+
+**When to use it:**
+- Session-start orientation
+- Unfamiliar subsystems
+- Pronoun-heavy user references such as "that helper" or "the auth flow"
+- Cross-file behavior questions
+
+**When not to use it:**
+- Trivial single-file reads
+- Tight edit-test loops
+- Questions about current uncommitted state
+
+**Staleness note:** The index reflects the last ingest; it may lag active uncommitted work.
+**Override note:** `ASK_SELF_PATH` can be overridden if needed.
+
 ## Skills (On-Demand)
 
 Workflows are loaded on-demand as skills via `.claude/skills/`. Invoke with `/skill-name [args]`.
